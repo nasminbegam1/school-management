@@ -7,6 +7,7 @@ Breadcrumbs::register('screen_list', function($breadcrumbs)
 {
     $breadcrumbs->parent('home');
     $breadcrumbs->push('Screen', 'javascript:void(0);');
+    $breadcrumbs->push('Screen', 'javascript:void(0);');
     $breadcrumbs->push('List', route('screen_list'));
 });
 ?>
