@@ -52,7 +52,7 @@
             <div class="maincontentinner">
             
             @yield('content')
-            
+<!--        New Line    -->
             <div class="footer">
                 @include('layout.footer')
             </div><!--footer-->
