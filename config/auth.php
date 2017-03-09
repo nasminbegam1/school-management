@@ -1,5 +1,4 @@
 <?php
-// new line add
 return [
 
     /*
