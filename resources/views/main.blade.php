@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Shamcey - Metro Style Admin Template</title>
+<title>School Management Admin</title>
 <link rel="stylesheet" href="/css/style.default.css" type="text/css" />
 <link rel="stylesheet" href="/css/style.shinyblue.css" type="text/css" />
 
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="/js/custom.js"></script>
-<script type="text/javascript">
+<!--<script type="text/javascript">
     jQuery(document).ready(function(){
         jQuery('#login').submit(function(){
             var u = jQuery('#username').val();
@@ -25,7 +25,7 @@
             }
         });
     });
-</script>
+</script>-->
 </head>
 
 <body class="loginpage">
@@ -33,7 +33,7 @@
 @yield('content')
 
 <div class="loginfooter">
-    <p>&copy; {{date('Y')}} Shamcey Admin Template. All Rights Reserved.</p>
+    <p>&copy; {{date('Y')}} School Management Admin. All Rights Reserved.</p>
 </div>
 
 </body>

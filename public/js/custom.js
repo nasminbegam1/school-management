@@ -157,4 +157,10 @@ jQuery(document).ready(function(){
 		
 	}
 	
+	jQuery(".form-validation").validate();
+	setTimeout(function () {
+		jQuery(".title-success").animate({opacity: 1.0}, 1000).fadeOut("900")
+	    }, 10000
+	);
+	
 });
