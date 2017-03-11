@@ -13,6 +13,7 @@
 <script type="text/javascript" src="/js/modernizr.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="/js/custom.js"></script>
 <!--<script type="text/javascript">
     jQuery(document).ready(function(){

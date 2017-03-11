@@ -12,7 +12,10 @@ class ModuleTableSeeder extends Seeder
     public function run()
     {
         DB::table('modules')->delete();
-
+        
+        $statement = "ALTER TABLE s_modules AUTO_INCREMENT = 1;";
+        DB::unprepared($statement);
+        
         DB::table('modules')->insert([
             'module_name' => 'User Module',
             'is_active' => 1,

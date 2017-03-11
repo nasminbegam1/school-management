@@ -5,9 +5,11 @@
     <div class="loginpanelinner">
         <div class="logo animate0 bounceIn"><img src="/images/logo.png" alt="" /></div>
         {!! Form::open(array('class'=>'form-validation','novalidate'))!!}
-            <div class="inputwrapper login-alert">
-                <div class="alert alert-error">Invalid username or password</div>
-            </div>
+            @if(Session::has('errorMessage'))
+                <div class="inputwrapper">
+                <div class="alert alert-error">{!! Session::get('errorMessage') !!}</div>
+                </div>
+            @endif
             <div class="inputwrapper animate1 bounceIn">
             {!! Form::select('usertype',$usertype,array('id'=>'usertype','required')) !!}
             </div>   

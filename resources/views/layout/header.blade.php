@@ -85,11 +85,11 @@
                 <div class="userloggedinfo">
                     <img src="/images/photos/thumb1.png" alt="" />
                     <div class="userinfo">
-                        <h5>Juan Dela Cruz <small>- juan@themepixels.com</small></h5>
+                        <h5>{!! \Auth::guard('users')->user()->name !!} <small>- {!! \Auth::guard('users')->user()->email !!}</small></h5>
                         <ul>
                             <li><a href="editprofile.html">Edit Profile</a></li>
                             <li><a href="">Account Settings</a></li>
-                            <li><a href="index.html">Sign Out</a></li>
+                            <li><a href="{!! URL::route('logout') !!}">Sign Out</a></li>
                         </ul>
                     </div>
                 </div>

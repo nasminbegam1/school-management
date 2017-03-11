@@ -21,3 +21,15 @@ Breadcrumbs::register('screen_edit', function($breadcrumbs,$id)
     $breadcrumbs->push('Screen', route('screen_list'));
     $breadcrumbs->push('Edit', route('screen_edit',$id));
 });
+
+Breadcrumbs::register('dashboard', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Dashboard', route('dashboard'));
+});
+
+Breadcrumbs::register('user_list', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('User List', route('user_list'));
+});

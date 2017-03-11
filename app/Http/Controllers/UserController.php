@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\Usertype, App\User;
+use \Session, \Validator,\Redirect, \Cookie;
+use Illuminate\Cookie\CookieJar;
+use Illuminate\Cookie\CookieServiceProvider;
 
 class UserController extends Controller
 {
-    public function login(Request $request){
+    public function login(Request $request, CookieJar $cookieJar){
         $data                   = array();
         $data['usertype']       = Usertype::pluck('type','id')->all();
         
@@ -48,7 +51,6 @@ class UserController extends Controller
                         $auth = auth()->guard('users');
                         $userdata = array('email' => $email, 'password' => $password , 'school_user_type_id' => $usertype);
                         if($auth->attempt($userdata)){
-                            dd($userdata);
                             return redirect::route('dashboard');
                         }else{
                             return redirect::back()->with('errorMessage', 'Invalid email address or/and password provided.');
@@ -65,6 +67,31 @@ class UserController extends Controller
     }
     
     public function dashboard(){
-        echo 'dashboard';
+        //dd(\Auth::guard('users')->user());
+        $data = array();
+        return view('user.dashboard',$data);
+    }
+    
+    public function logout(){
+        \Auth::guard('users')->logout();
+        return Redirect::route('login');
+    }
+    
+    public function lists(Request $request){
+        $data                   = array();
+        $data['keyword']        = '';
+        if($request->keyword !=''){
+            $data['keyword']            = $request->keyword;
+            $data['lists']              = User::where(function($query) use ($data) {
+                                                if($data['keyword'] != ''){
+                                                $query->where('name','like','%'.$data['keyword'].'%');
+                                                }
+                                            })
+                                            ->orderBy('id','asc')->paginate(15);
+        }
+        else{
+            $data['lists']              = User::orderBy('id','asc')->paginate(15);
+        }
+        return view('user.list',$data);
     }
 }
