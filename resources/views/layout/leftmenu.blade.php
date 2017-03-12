@@ -14,5 +14,6 @@
                 <li @if(Route::current()->getName() == 'usertype_create') {{ "class=active" }} @endif><a href="{{URL::route('usertype_create')}}">Add</a></li>
             </ul>
         </li>
+            <li @if(Route::current()->getName() == 'user_list' || Route::current()->getName() == 'role_assign') {{ "class=active" }} @endif><a href="{{URL::route('user_list')}}"><span class="iconfa-user"></span> User</a></li>
     </ul>
 </div><!--leftmenu-->
