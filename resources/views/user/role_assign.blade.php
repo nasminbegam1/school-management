@@ -4,7 +4,7 @@
     <div class="pageheader">
         <div class="pageicon"><span class="iconfa-edit"></span></div>
         <div class="pagetitle">
-            <h1>Edit Profile</h1>
+            <h1>Role Assign</h1>
         </div>
     </div><!--pageheader-->
 @stop
@@ -37,6 +37,7 @@
             </div>
             <p class="stdformbutton">
             {!! Form::submit('Submit',array('class'=>'btn btn-primary')) !!}
+            <a href="{{URL::route('user_list')}}" class="btn btn-default">Cancel</a>
             </p>
         {!! Form::close() !!}
         </div><!--widgetcontent-->

@@ -1,10 +1,11 @@
 @extends('layout')
 @section('pageheader')
     <div class="pageheader">
-        {!! Form::open(array('route'=>'screen_list','method'=>'post','class'=>'searchbar')) !!}
+        {!! Form::open(array('route'=>'user_list','method'=>'post','class'=>'searchbar')) !!}
         {!! Form::text('keyword',$keyword,array('placeholder'=>'To search type and hit enter...')) !!}
-        {!! Form::text('keyword',$keyword,array('placeholder'=>'To search type and hit enter...')) !!}
-        {!! Form::text('keyword',$keyword,array('placeholder'=>'To search type and hit enter...')) !!}
+        {!! Form::text('registerdate',$registerdate,array('placeholder'=>'Register Date','id'=>'datepicker')) !!}
+        {!! Form::select('status',[''=>'Select.....','accepted'=>'Accepted','rejected'=>'Rejected','deleted'=>'Deleted'],$status) !!}
+        {!! Form::submit('Search',['class'=>'btn btn-info']) !!}
         {!! Form::close() !!}
         <div class="pageicon"><span class="iconfa-user"></span></div>
         <div class="pagetitle">

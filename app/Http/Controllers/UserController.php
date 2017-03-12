@@ -217,14 +217,31 @@ class UserController extends Controller
     public function lists(Request $request){
         $data                   = array();
         $data['keyword']        = '';
-        if($request->keyword != ''){
+        $data['registerdate']   = '';
+        $data['status']         = '';
+        if($request->keyword != '' || $request->registerdate != '' || $request->status != ''){
             $data['keyword']            = $request->keyword;
-            $data['lists']              = User::where('id','<>',\Auth::guard('users')->user()->id)->where(function($query) use ($data) {
+            $data['registerdate']       = $request->registerdate;
+            $data['status']             = $request->status;
+            $data['lists']              = User::where('id','<>',\Auth::guard('users')->user()->id)
+                                                ->where(function($query) use ($data) {
                                                 if($data['keyword'] != ''){
-                                                $query->where('name','like','%'.$data['keyword'].'%');
+                                                    $query->where('name','like','%'.$data['keyword'].'%');
+                                                    $query->orWhere('email','like','%'.$data['keyword'].'%');
+                                                }
+                                                if($data['status'] != ''){
+                                                    if($data['status'] == 'accepted'){
+                                                        $query->where('is_active',1);
+                                                    }elseif($data['status'] == 'deleted'){
+                                                        $query->where('is_deleted',1);
+                                                    }
+                                                }
+                                                if($data['registerdate'] != ''){
+                                                    $query->whereRaw("DATE_FORMAT(created_at, '%m/%d/%Y')='".$data['registerdate']."'");
                                                 }
                                             })
                                             ->orderBy('id','asc')->paginate(15);
+                                            //dd($data['lists']);
         }
         else{
             $data['lists']              = User::where('id','<>',\Auth::guard('users')->user()->id)->orderBy('id','asc')->paginate(15);
