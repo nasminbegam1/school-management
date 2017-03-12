@@ -22,47 +22,22 @@
             </li>
             <li>
                 <a class="dropdown-toggle" data-toggle="dropdown" data-target="#">
-                <span class="count">10</span>
+                <span class="count">{{count(\Helpers::pending_user())}}</span>
                 <span class="head-icon head-users"></span>
                 <span class="headmenu-label">New Users</span>
                 </a>
                 <ul class="dropdown-menu newusers">
                     <li class="nav-header">New Users</li>
+                    @if(count(\Helpers::pending_user()) > 0)
+                    @foreach(\Helpers::pending_user() as $pendingUser)
                     <li>
-                        <a href="">
-                            <img src="/images/photos/thumb1.png" alt="" class="userthumb" />
-                            <strong>Draniem Daamul</strong>
-                            <small>April 20, 2013</small>
+                        <a href="javascript:void(0);">
+                            <strong>{!! $pendingUser->name !!}</strong>
+                            <small>{!! date('F d,Y',strtotime($pendingUser->created_at)) !!}</small>
                         </a>
                     </li>
-                    <li>
-                        <a href="">
-                            <img src="/images/photos/thumb2.png" alt="" class="userthumb" />
-                            <strong>Shamcey Sindilmaca</strong>
-                            <small>April 19, 2013</small>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img src="/images/photos/thumb3.png" alt="" class="userthumb" />
-                            <strong>Nusja Paul Nawancali</strong>
-                            <small>April 19, 2013</small>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img src="/images/photos/thumb4.png" alt="" class="userthumb" />
-                            <strong>Rose Cerona</strong>
-                            <small>April 18, 2013</small>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img src="/images/photos/thumb5.png" alt="" class="userthumb" />
-                            <strong>John Doe</strong>
-                            <small>April 16, 2013</small>
-                        </a>
-                    </li>
+                    @endforeach
+                    @endif
                 </ul>
             </li>
             <li class="odd">
@@ -83,12 +58,11 @@
             </li>
             <li class="right">
                 <div class="userloggedinfo">
-                    <img src="/images/photos/thumb1.png" alt="" />
                     <div class="userinfo">
                         <h5>{!! \Auth::guard('users')->user()->name !!} <small>- {!! \Auth::guard('users')->user()->email !!}</small></h5>
                         <ul>
-                            <li><a href="editprofile.html">Edit Profile</a></li>
-                            <li><a href="">Account Settings</a></li>
+                            <li><a href="{!! URL::route('edit_profile') !!}">Edit Profile</a></li>
+                            <li><a href="{!! URL::route('account_settings') !!}">Account Settings</a></li>
                             <li><a href="{!! URL::route('logout') !!}">Sign Out</a></li>
                         </ul>
                     </div>
