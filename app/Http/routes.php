@@ -37,4 +37,16 @@ Route::post('/usertype-store',              'UsertypeController@store')->name('u
 Route::get('/usertype-edit/{id}',           'UsertypeController@edit')->name('usertype_edit');
 Route::post('/usertype-update/{id}',        'UsertypeController@update')->name('usertype_update');
 Route::get('/usertype-delete/{id}',         'UsertypeController@delete')->name('usertype_delete');
+
+
+Route::group(['prefix' =>'school-modlues'], function () {
+    Route::any('/',               'SchoolmoduleController@index')->name('school_modlues');
+    Route::any('/add',               'SchoolmoduleController@add')->name('school_modlues_add');
+    Route::any('/store',               'SchoolmoduleController@store')->name('school_modlues_store');
+    
+    Route::any('/edit/{id}',               'SchoolmoduleController@edit')->name('school_modlues_edit');
+    Route::any('/update/{id}',               'SchoolmoduleController@update')->name('school_modlues_update');
+    Route::any('/delete/{id}',               'SchoolmoduleController@delete')->name('school_modlues_delete');
+});
+
 });
