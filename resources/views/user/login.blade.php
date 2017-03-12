@@ -23,7 +23,7 @@
             {!! Form::submit('Sign In') !!}
             </div>
             <div class="inputwrapper animate4 bounceIn">
-                <div class="pull-right">Not a member? <a href="registration.html">Sign Up</a></div>
+                <div class="pull-right">Not a member? <a href="{{ URL::route('registration') }}">Sign Up</a></div>
                 <label>{!! Form::checkbox('remember_me',1,false,array('class'=>'remember')) !!}Keep me sign in</label>
             </div> 
         {!! Form::close() !!}
