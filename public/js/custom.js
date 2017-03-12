@@ -163,4 +163,13 @@ jQuery(document).ready(function(){
 	    }, 10000
 	);
 	
+	jQuery(".module_checkbox").click(function(){
+		 var c = jQuery(this).prop('checked');
+		 if(c == true){
+			jQuery(this).parents('.sub').find('.uncheck_module_checkbox').prop('checked',false);
+		 }else{
+			jQuery(this).parents('.sub').find('.uncheck_module_checkbox').prop('checked',true);
+		 }
+		 
+	});
 });

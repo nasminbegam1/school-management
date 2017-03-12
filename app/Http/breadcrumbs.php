@@ -68,3 +68,22 @@ Breadcrumbs::register('usertype_edit', function($breadcrumbs,$id)
     $breadcrumbs->push('User Type', route('usertype_list'));
     $breadcrumbs->push('Edit', route('usertype_edit',$id));
 });
+
+Breadcrumbs::register('school_modlues', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('School Module List', route('school_modlues'));
+    $breadcrumbs->push('Add', route('school_modlues_add'));
+});
+Breadcrumbs::register('school_modlues_add', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('School Module List', route('school_modlues'));
+    $breadcrumbs->push('Add', route('school_modlues_add'));
+});
+Breadcrumbs::register('school_modlues_edit', function($breadcrumbs,$id)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('School Module List', route('school_modlues'));
+    $breadcrumbs->push('Edit', route('school_modlues_edit',$id));
+});

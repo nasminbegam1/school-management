@@ -65,6 +65,20 @@ return [
             'strict' => false,
             'engine' => null,
         ],
+        
+        'mysql_school' => [
+            'driver' => 'mysql',
+            'host' => env('DB_SCHOOL_HOST', 'localhost'),
+            'port' => env('DB_SCHOOL_PORT', '3306'),
+            'database' => env('DB_SCHOOL_DATABASE', 'forge'),
+            'username' => env('DB_SCHOOL_USERNAME', 'forge'),
+            'password' => env('DB_SCHOOL_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
 
         'pgsql' => [
             'driver' => 'pgsql',
