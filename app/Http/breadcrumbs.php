@@ -33,3 +33,38 @@ Breadcrumbs::register('user_list', function($breadcrumbs)
     $breadcrumbs->parent('home');
     $breadcrumbs->push('User List', route('user_list'));
 });
+Breadcrumbs::register('role_assign', function($breadcrumbs,$id)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('User List', 'javascript:void(0);');
+    $breadcrumbs->push('Role Assign', route('role_assign',$id));
+});
+Breadcrumbs::register('edit_profile', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Edit Profile', route('edit_profile'));
+});
+Breadcrumbs::register('account_settings', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Account Settings', route('account_settings'));
+});
+
+Breadcrumbs::register('usertype_list', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('User Type', 'javascript:void(0);');
+    $breadcrumbs->push('List', route('usertype_list'));
+});
+Breadcrumbs::register('usertype_create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('User Type', route('usertype_list'));
+    $breadcrumbs->push('Create', route('usertype_create'));
+});
+Breadcrumbs::register('usertype_edit', function($breadcrumbs,$id)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('User Type', route('usertype_list'));
+    $breadcrumbs->push('Edit', route('usertype_edit',$id));
+});

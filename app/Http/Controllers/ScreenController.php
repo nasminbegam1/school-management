@@ -15,7 +15,7 @@ class ScreenController extends Controller
         $data['keyword']        = '';
         if($request->keyword !=''){
             $data['keyword']            = $request->keyword;
-            $data['lists'] = Screen::where(function($query) use ($data) {
+            $data['lists'] = Screen::where('is_deleted',0)->where(function($query) use ($data) {
                                 if($data['keyword'] != ''){
                                 $query->where('screen_name','like','%'.$data['keyword'].'%');
                                 }
@@ -23,7 +23,7 @@ class ScreenController extends Controller
                             ->orderBy('screen_name','asc')->paginate(15);
         }
         else{
-            $data['lists']      = Screen::orderBy('screen_name','asc')->paginate(15);
+            $data['lists']      = Screen::where('is_deleted',0)->orderBy('screen_name','asc')->paginate(15);
         }
         return view('screen.index',$data);
     }
@@ -45,13 +45,14 @@ class ScreenController extends Controller
             $screen                 = new Screen;
             $screen->modules_id     = $request->module;
             $screen->screen_name    = $request->screen_name;
+            $screen->is_deleted     = 0;
             $screen->save();
             return Redirect::route('screen_list')->with('success','Screen Added Successfully!');
         }
     }
     
     public function edit($id){
-        $data['details'] = Screen::find($id);
+        $data['details']    = Screen::find($id);
         $data['module']     = Module::pluck('module_name','id')->all();
         return view('screen.edit',$data);
     }
@@ -73,7 +74,9 @@ class ScreenController extends Controller
     }
     
     public function delete($id){
-        Screen::find($id)->delete();
+        $screen             = Screen::find($id);
+        $screen->is_deleted = 1;
+        $screen->save();
         return Redirect::route('screen_list')->with('success','Screen Deleted Successfully!');
     }
 }

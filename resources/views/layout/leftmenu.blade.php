@@ -8,5 +8,11 @@
                 <li @if(Route::current()->getName() == 'screen_create') {{ "class=active" }} @endif><a href="{{URL::route('screen_create')}}">Add</a></li>
             </ul>
         </li>
+        <li class="dropdown {{(Route::current()->getName() == 'usertype_list' || Route::current()->getName() == 'usertype_create' || Route::current()->getName() == 'usertype_edit')?'active':'' }}"><a href="javascript:void(0);"><span class="iconfa-pencil"></span>User type</a>
+            <ul @if(Route::current()->getName() == 'usertype_list' || Route::current()->getName() == 'usertype_create' || Route::current()->getName() == 'usertype_edit') {{ "style='display: block'" }} @endif>
+                <li @if(Route::current()->getName() == 'usertype_list'|| Route::current()->getName() == 'usertype_edit') {{ "class=active" }} @endif><a href="{{URL::route('usertype_list')}}">List</a></li>
+                <li @if(Route::current()->getName() == 'usertype_create') {{ "class=active" }} @endif><a href="{{URL::route('usertype_create')}}">Add</a></li>
+            </ul>
+        </li>
     </ul>
 </div><!--leftmenu-->

@@ -3,6 +3,8 @@
     <div class="pageheader">
         {!! Form::open(array('route'=>'screen_list','method'=>'post','class'=>'searchbar')) !!}
         {!! Form::text('keyword',$keyword,array('placeholder'=>'To search type and hit enter...')) !!}
+        {!! Form::text('keyword',$keyword,array('placeholder'=>'To search type and hit enter...')) !!}
+        {!! Form::text('keyword',$keyword,array('placeholder'=>'To search type and hit enter...')) !!}
         {!! Form::close() !!}
         <div class="pageicon"><span class="iconfa-user"></span></div>
         <div class="pagetitle">
@@ -33,8 +35,7 @@
                 <td>{!! $list->email !!}</td>
                 <td>{!! ($list->is_active == 1)?'Active':'Inactive' !!}</td>
                 <td>
-                <a class="btn" href="{!! URL::route('screen_edit',$list->id) !!}"><i class="icon-edit"></i></a>
-                <a class="btn" href="{!! URL::route('screen_delete',$list->id) !!}" onclick="return confirm('Are you sure want to delete this record?')"><i class="icon-remove-sign"></i></a>
+                <a class="btn" href="{!! URL::route('role_assign',$list->id) !!}" title="Role Assign"><i class="icon-edit"></i></a>
                 </td>
             </tr>
             @endforeach
