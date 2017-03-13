@@ -172,4 +172,44 @@ jQuery(document).ready(function(){
 		 }
 		 
 	});
+
+	jQuery('.changeStatusBtn').click(function(){
+
+		var id = jQuery(this).attr('data-id');
+		var type = jQuery(this).attr('data-type');
+		var status = jQuery(this).attr('data-status');
+		var element = jQuery(this);
+		jQuery.ajax({
+			type:'POST',
+			url: BASE_URL+'/change-status',
+			data:{
+				id 	: id,
+				type : type,
+				status : status,
+				_token : CSRF_TOKEN
+			},
+			beforeSend: function(){
+				jQuery(element).find('i').removeAttr('class');
+				jQuery(element).find('i').addClass('fa fa-cog fa-spin');
+			},
+			dataType: 'JSON',
+			success:function(response){
+				jQuery(element).find('i').removeAttr('class');
+				if(response.status == 1){
+					jQuery(element)
+						.attr('title','Approved')
+						.removeClass('inactiveStatus')
+						.addClass('activeStatus');
+					jQuery(element).find('i').addClass('fa fa-check-circle');		
+				}
+				else if(response.status == 0){
+					jQuery(element)
+						.attr('title','Rejected')
+						.removeClass('activeStatus')
+						.addClass('inactiveStatus');
+					jQuery(element).find('i').addClass('fa fa-times-circle');		
+				}
+			}
+		})
+	})
 });
