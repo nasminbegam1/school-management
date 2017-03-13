@@ -6,6 +6,8 @@
 <title>School Management Admin</title>
 
 <link rel="stylesheet" href="/css/style.default.css" type="text/css" />
+<!-- <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" /> -->
+<link rel="stylesheet" href="/css/font-awesome.css" type="text/css" />
 <link rel="stylesheet" href="/css/custom.css" type="text/css" />
 <!--<link rel="stylesheet" href="/css/bootstrap-fileupload.min.css" type="text/css" />-->
 <link rel="stylesheet" href="/css/bootstrap-timepicker.min.css" type="text/css" />

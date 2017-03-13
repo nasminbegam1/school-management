@@ -23,6 +23,7 @@
             </div>
         @endif
         {!! Form::open(array('route'=>array('role_assign_update',$users->id),'class'=>'stdform form-validation','files'=>true,'method'=>'post')) !!}
+        {!! Form::hidden('prev_url',$prev_url) !!}
             <div class="control-group">
                 <label class="control-label" for="lastname">Name</label>
                 <div class="controls">{!! Form::text('name',$users->name,array('class'=>'input-xxlarge','required','readonly')) !!}</div>

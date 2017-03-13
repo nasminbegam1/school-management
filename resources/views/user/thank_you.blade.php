@@ -11,6 +11,7 @@
         
         @if(Session::has('success'))
             <h4 class="widgettitle title-success">{{ Session::get('success') }}</h4>
+
         @endif
         
         @if(!Session::has('error') && !Session::has('success') )

@@ -19,7 +19,10 @@
             </div>
             @endif
             <div class="inputwrapper animate1 bounceIn">
-            {!! Form::select('usertype',$usertype,array('id'=>'usertype','required')) !!}
+            {!! Form::select('usertype',[''=>'Select Any User Type']+$usertype,array('id'=>'usertype','required')) !!}
+            </div>
+            <div class="inputwrapper animate1 bounceIn">
+            {!! Form::select('school_id',[''=>'Select Any School']+$schools,array('id'=>'school_id','required')) !!}
             </div>
             <div class="inputwrapper animate1 bounceIn">
             {!! Form::text('name','',array('id'=>'name','placeholder'=>'Enter any name','required')) !!}
@@ -40,7 +43,7 @@
             {!! Form::text('mob2','',array('id'=>'mob2','placeholder'=>'Enter any alternate mobile no')) !!}
             </div>
             <div class="inputwrapper animate3 bounceIn">
-            {!! Form::submit('Sign In') !!}
+            {!! Form::button('Sign Up',['type'=>'submit']) !!}
             </div>
             <div class="inputwrapper animate4 bounceIn">
                 <div class="pull-right">Member? <a href="{{URL::route('login')}}">Sign In</a></div>

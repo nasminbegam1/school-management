@@ -1,3 +1,14 @@
 .hide{
     display:none;
 }
+
+.changeStatusBtn{
+	font-size:25px;
+	cursor: pointer;
+}
+.inactiveStatus{
+	color: #EF290A;
+}
+.activeStatus{
+	color: #087226;
+}

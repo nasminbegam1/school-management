@@ -12,7 +12,21 @@ class ScreenController extends Controller
 {
     public function index(Request $request){
         $data                   = array();
-        $data['keyword']        = '';
+        $routeCollection = \Route::getRoutes();;
+        $d =[];
+        foreach ($routeCollection as $value) {
+            $methods = $value->getMethods();
+            if(in_array('GET', $methods) && !in_array('POST', $methods)){
+                $group = ltrim($value->getPrefix(),'/');
+                $d[] = ['path'      =>   $value->getPath(),
+                        'name'      =>   $value->getName(),
+                        'group_name'=>   $group
+                        
+                       ];
+            }
+        }
+        $data['lists'] = $d;
+        /*$data['keyword']        = '';
         if($request->keyword !=''){
             $data['keyword']            = $request->keyword;
             $data['lists'] = Screen::where('is_deleted',0)->where(function($query) use ($data) {
@@ -24,7 +38,7 @@ class ScreenController extends Controller
         }
         else{
             $data['lists']      = Screen::where('is_deleted',0)->orderBy('screen_name','asc')->paginate(15);
-        }
+        }*/
         return view('screen.index',$data);
     }
     
