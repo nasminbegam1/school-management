@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>School Management Admin</title>
 <link rel="stylesheet" href="/css/style.default.css" type="text/css" />
+<link rel="stylesheet" href="/css/custom.css" type="text/css" />
 <link rel="stylesheet" href="/css/style.shinyblue.css" type="text/css" />
 
 <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>

@@ -21,8 +21,12 @@ class UserController extends Controller
         return view('user.dashboard',$data);
     }
     
-    public function logout(){
+    public function logout(CookieJar $cookieJar){
         \Auth::guard('users')->logout();
+        $cookieJar->queue(Cookie::forget('keep_user_id_email'));
+        $cookieJar->queue(Cookie::forget('keep_password'));
+        $cookieJar->queue(Cookie::forget('keep_usertype'));
+        $cookieJar->queue(Cookie::forget('keep_me_active'));
         return Redirect::route('login');
     }
     

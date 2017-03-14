@@ -16,6 +16,8 @@ class WelcomeController extends Controller
 		public $form_email = 'begam.nasmin91@gmail.com';
 
 		public function login(Request $request, CookieJar $cookieJar){
+			/*$u = User::select('school_user_type_id','user_id')->lists('school_user_type_id','user_id');
+			dd($u);*/
 	        if(\Auth::guard('users')->check() == true){
 	            return Redirect::route('dashboard');
 	        }
@@ -24,56 +26,87 @@ class WelcomeController extends Controller
 	        
 	        if( $request->isMethod('post') ){
 	            $data['usertype']       = '';
-	            $data['email']          = '';
+	            $data['user_id_email']          = '';
 	            $data['password']       = '';
 	            
-	            $validator              = Validator::make($request->all(), ['email'=>'required|email','password' => 'required']);
+	            $validator              = Validator::make($request->all(), ['user_id_email'=>'required','password' => 'required']);
 	            
 	            if($validator->fails()){
 	                 $messages = $validator->messages();
 	                 return Redirect::back()->withErrors($validator)->withInput();
 	            }
 	            else{
-	                $email          = $request->email;
+	                $user_id_email          = $request->user_id_email;
 	                $password       = $request->password;
 	                $usertype       = $request->usertype;
-	                if($request->get('remember_me')){
-	                    $cookieJar->queue(Cookie::make('email',$email,45000));
-	                    $cookieJar->queue(Cookie::make('password',$password,45000));
-	                    $cookieJar->queue(Cookie::make('usertype',$usertype,45000));
+	                if($request->get('keep_me_login')){
+	                    $cookieJar->queue(Cookie::make('keep_user_id_email',$user_id_email,45000));
+	                    $cookieJar->queue(Cookie::make('keep_password',$password,45000));
+	                    $cookieJar->queue(Cookie::make('keep_usertype',$usertype,45000));
+	                    $cookieJar->queue(Cookie::make('keep_me_active',1,45000));
 	                }
 	                else{
-	                    $cookieJar->queue(Cookie::forget('email'));
-	                    $cookieJar->queue(Cookie::forget('password'));
-	                    $cookieJar->queue(Cookie::forget('usertype'));
+	                    $cookieJar->queue(Cookie::forget('keep_user_id_email'));
+	                    $cookieJar->queue(Cookie::forget('keep_password'));
+	                    $cookieJar->queue(Cookie::forget('keep_usertype'));
+	                    $cookieJar->queue(Cookie::forget('keep_me_active'));
 	                }
-	                $checkAdminExists = User::where('email', $email)->get();
-	                if( count($checkAdminExists) > 0 ){
-	                    $checkUserstatus = User::where('email', $email)
+
+	                if($request->get('remember_me')){
+	                    $cookieJar->queue(Cookie::make('remember_user_id_email',$user_id_email,45000));
+	                    $cookieJar->queue(Cookie::make('remember_password',$password,45000));
+	                    $cookieJar->queue(Cookie::make('remember_usertype',$usertype,45000));
+	                }
+	                else{
+	                    $cookieJar->queue(Cookie::forget('remember_user_id_email'));
+	                    $cookieJar->queue(Cookie::forget('remember_password'));
+	                    $cookieJar->queue(Cookie::forget('remember_usertype'));
+	                }
+	                $checkUserstatus = User::where('email', $user_id_email)
+	                    							->orWhere('user_id', $user_id_email)
 	                                                ->where('is_active','1')
 	                                                ->where('is_deleted',0)
-	                                                ->get();
+	                                                ->first();
+
 	                    if( count($checkUserstatus) > 0 ){
 	                        $auth = auth()->guard('users');
-	                        $userdata = array('email' => $email, 'password' => $password , 'school_user_type_id' => $usertype);
+	                        $userdata = [ 'password' => $password , 'school_user_type_id' => $usertype ];
+	                        if($checkUserstatus->user_id == $user_id_email){
+	                        	 $userdata['user_id'] = $user_id_email;
+	                        }elseif($checkUserstatus->email == $user_id_email){
+	                        	 $userdata['email'] = $user_id_email;
+	                        }
+	                       
 	                        if($auth->attempt($userdata)){
 	                            return redirect::route('dashboard');
 	                        }else{
-	                            return redirect::back()->with('errorMessage', 'Invalid email address or/and password provided.');
+	                            return redirect::back()->with('errorMessage', 'Invalid user id or email or password provided.');
 	                        }
 	                    } else{
-	                        return redirect::back()->with('errorMessage', 'Invalid email address or/and password provided.');
+	                        return redirect::back()->with('errorMessage', 'Invalid user id or email or password provided.');
 	                    }
-	                }else{
-	                    return redirect::back()->with('errorMessage', 'Invalid email address or/and password provided.');
-	                }
+	               
 	            }
 	        }
+	        $data['log']['user_id_email'] ='';
+	        $data['log']['password'] ='';
+	        $data['log']['usertype'] ='';
+	        if(Cookie::has('remember_user_id_email') !=''){
+	        	$data['log']['user_id_email'] = Cookie::get('remember_user_id_email');
+	        }
+	        /*if(Cookie::has('remember_password') !=''){
+	        	$data['log']['password'] = Cookie::get('remember_password');
+	        }*/
+	        if(Cookie::has('remember_usertype') !=''){
+	        	$data['log']['usertype'] = Cookie::get('remember_usertype');
+	        }
+	        
 	        return view('user.login', $data);
 	    }
 
 
 	    public function registration(Request $request){
+
 	        if(\Auth::guard('users')->check() == true){
 	            return Redirect::route('dashboard');
 	        }
@@ -81,9 +114,9 @@ class WelcomeController extends Controller
 	        if( $request->isMethod('post') ){
 	            $validator              = Validator::make($request->all(),
 	                                            ['usertype'     => 'required',
-	                                             'user_id'      => 'required',
+	                                             'user_id'      => 'required|unique:School_User,user_id',
 	                                             'name'         => 'required',
-	                                             'email'        => 'required|email|unique:users',
+	                                             'email'        => 'required|email|unique:School_User',
 	                                             'password'     => 'required',
 	                                             'mob1'         => 'required'
 	                                             ]
@@ -101,8 +134,8 @@ class WelcomeController extends Controller
 	                $user->name                      = $request->name;
 	                $user->email                     = $request->email;
 	                $user->password                  = $request->password;
-	                $user->mob1                      = $request->mob1;
-	                $user->mob2                      = $request->mob2;
+	                $user->mob1                      = '+91'.$request->mob1;
+	                $user->mob2                      = '+91'.$request->mob2;
 	                $user->is_active                 = 0;
 	                $user->remember_token            = csrf_token();
 	                $user->save();
@@ -114,11 +147,11 @@ class WelcomeController extends Controller
 	                $data['link']           = \URL::route('active_by_user',$user->remember_token);
 	                $data['subject']	= 'Thank you for Signup';
 
-	                //$mail = \Mail::send('emails.signup_mailto_user', $data, function ($message) use ($data) {
-	                //    $message->from($data['from_email'], $data['form_name']);
-	                //    $message->subject($data['subject']);
-	                //    $message->to($data['to_email'] );
-	                //});
+	                /*$mail = \Mail::send('emails.signup_mailto_user', $data, function ($message) use ($data) {
+	                   $message->from($data['from_email'], $data['form_name']);
+	                   $message->subject($data['subject']);
+	                   $message->to($data['to_email'] );
+	                });*/
 	                return redirect::route('dashboard')->with('success','Please check your mail to active account');
 	            }
 	        }
@@ -176,11 +209,11 @@ class WelcomeController extends Controller
 	                $data['subject']		= 'Thank you for Signup';
 	                $data['password']		= $newPassword;
 	             
-	                //$mail = \Mail::send('emails.forgot_password', $data, function ($message) use ($data) {
-	                //    $message->from($data['from_email'], $data['form_name']);
-	                //    $message->subject($data['subject']);
-	                //    $message->to($data['to_email'] );
-	                //});
+	                $mail = \Mail::send('emails.forgot_password', $data, function ($message) use ($data) {
+	                   $message->from($data['from_email'], $data['form_name']);
+	                   $message->subject($data['subject']);
+	                   $message->to($data['to_email'] );
+	                });
 
 	                return Redirect::route('login')->with('successMessage', 'New password is send to your registerd Email <br/> Please Check the mail inbox to get the new password');
 	    		}else{

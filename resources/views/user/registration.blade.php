@@ -19,10 +19,10 @@
             </div>
             @endif
             <div class="inputwrapper animate1 bounceIn">
-            {!! Form::select('usertype',[''=>'Select Any User Type']+$usertype,array('id'=>'usertype','required')) !!}
+            {!! Form::select('usertype',[''=>'Select Any User Type']+$usertype,$log['usertype'],array('id'=>'usertype','required'=>'required')) !!}
             </div>
             <div class="inputwrapper animate1 bounceIn">
-            {!! Form::select('school_id',[''=>'Select Any School']+$schools,array('id'=>'school_id','required')) !!}
+            {!! Form::select('school_id',[''=>'Select Any School']+$schools,'',array('id'=>'school_id','required')) !!}
             </div>
             <div class="inputwrapper animate1 bounceIn">
             {!! Form::text('name','',array('id'=>'name','placeholder'=>'Enter any name','required')) !!}
@@ -36,11 +36,13 @@
             <div class="inputwrapper animate2 bounceIn">
             {!! Form::password('password',array('id'=>'password','placeholder'=>'Enter any password','required')) !!}
             </div>
-            <div class="inputwrapper animate1 bounceIn">
-            {!! Form::text('mob1','',array('id'=>'mob1','placeholder'=>'Enter any mobile no','required')) !!}
+            <div class="inputwrapper animate1 bounceIn mobbox">
+            <span>+91</span>
+            {!! Form::text('mob1','',array('id'=>'mob1','placeholder'=>'Enter any mobile no','required','maxlength'=>'10')) !!}
             </div>
-            <div class="inputwrapper animate1 bounceIn">
-            {!! Form::text('mob2','',array('id'=>'mob2','placeholder'=>'Enter any alternate mobile no')) !!}
+            <div class="inputwrapper animate1 bounceIn mobbox">
+            <span>+91</span>
+            {!! Form::text('mob2','',array('id'=>'mob2','placeholder'=>'Enter any alternate mobile no','maxlength'=>'10')) !!}
             </div>
             <div class="inputwrapper animate3 bounceIn">
             {!! Form::button('Sign Up',['type'=>'submit']) !!}
