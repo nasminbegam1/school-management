@@ -12,3 +12,16 @@
 .activeStatus{
 	color: #087226;
 }
+
+.mobbox input {
+    padding-left: 28px !important;
+    width: 231px !important;
+}
+.mobbox span {
+    background: #FFF;
+    line-height: 40px;
+    display: inline-block;
+    margin-top: 0px;
+    position: absolute;
+    padding-left: 5px;
+}
