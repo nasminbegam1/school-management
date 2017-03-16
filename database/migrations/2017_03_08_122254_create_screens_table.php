@@ -12,15 +12,24 @@ class CreateScreensTable extends Migration
      */
     public function up()
     {
-        Schema::create('screens', function (Blueprint $table) {
+        Schema::create('Screen_Master', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('modules_id')->unsigned();
-            $table->foreign('modules_id')->references('id')->on('modules')->onDelete('no action')->onUpdate('no action');
+            $table->integer('parent_id')->unsigned()->nullable();
             $table->string('screen_name',255);
+            $table->string('screen_alise',255);
             $table->integer('updated_by')->nullable();
+            $table->integer('is_active')->default(0);
+            $table->integer('is_left_visible')->default(0);
             $table->integer('is_deleted')->nullable();
             $table->timestamps();
         });
+        Schema::table('Screen_Master', function($table) {
+
+            $table->foreign('modules_id')->references('id')->on('Modules')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('parent_id')->references('id')->on('Screen_Master')->onDelete('cascade')->onUpdate('cascade');
+        });
+
     }
 
     /**

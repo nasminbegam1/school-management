@@ -61,7 +61,7 @@
                     <div class="userinfo">
                         <h5>{!! \Auth::guard('users')->user()->name !!} <small>- {!! \Auth::guard('users')->user()->email !!}</small></h5>
                         <ul>
-                            <li><a href="{!! URL::route('edit_profile') !!}">Edit Profile</a></li>
+                            <li><a href="{!! URL::route('profile_edit') !!}">Edit Profile</a></li>
                             <li><a href="{!! URL::route('account_settings') !!}">Account Settings</a></li>
                             <li><a href="{!! URL::route('logout') !!}">Sign Out</a></li>
                         </ul>

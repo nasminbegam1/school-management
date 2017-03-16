@@ -1,4 +1,4 @@
-jQuery.noConflict();
+//jQuery.noConflict();
 
 jQuery(document).ready(function(){
 	
@@ -101,13 +101,13 @@ jQuery(document).ready(function(){
 	});
 	
 	// load selected skin color from cookie
-	if(jQuery.cookie('skin-color')) {
+	/*if(jQuery.cookie('skin-color')) {
 		var c = jQuery.cookie('skin-color');
 		if(c) {
 			jQuery('head').append('<link id="skinstyle" rel="stylesheet" href="css/style.'+c+'.css" type="text/css" />');
 			jQuery.cookie("skin-color", c, { path: '/' });
 		}
-	}
+	}*/
 	
 	
 	// expand/collapse boxes
@@ -142,7 +142,7 @@ jQuery(document).ready(function(){
 	
 	
 	// if facebook like chat is enabled
-	if(jQuery.cookie('enable-chat')) {
+	/*if(jQuery.cookie('enable-chat')) {
 		
 		jQuery('body').addClass('chatenabled');
 		jQuery.get('ajax/chat.html',function(data){
@@ -155,7 +155,7 @@ jQuery(document).ready(function(){
 			jQuery('.chatmenu').remove();
 		}
 		
-	}
+	}*/
 	
 	jQuery(".form-validation").validate();
 	setTimeout(function () {
@@ -211,5 +211,48 @@ jQuery(document).ready(function(){
 				}
 			}
 		})
-	})
+	});
+
+$(".modleScreenLink[data-toggle='modal']").on('click', function(e) {
+    $_clObj = $(this); //clicked object
+    $_mdlObj = $_clObj.attr('data-target'); //modal element id 
+    $($_mdlObj).on('shown.bs.modal',{ _clObj: $_clObj }, function (event) {
+           $_clObj = event.data._clObj; //$_clObj is the clicked element !!!
+           //do your stuff here...
+           $($_mdlObj).find(".modal-body").load($($_clObj).attr('href'),function(){
+           			$(".saveScreenBtn").click(function(){
+
+           				var action = $(".screenUpdateFrm").attr('action');
+           				var data   = $(".screenUpdateFrm").serialize() ;
+           				$.ajax({
+           						url 			: action,
+           						data 			: data,
+           						type 			: 'POST',
+           						dataType 		: 'JSON',
+           						beforeSend		: function(){
+			           							$(".modal-loader").show();
+			           							$(".modal-loader .modal-sub-content-1").show();
+           						},
+           						success 		:function(response){
+		           							if(response.status == 1){
+			           							$(".modal-loader .modal-sub-content-1").hide();
+			           							$(".modal-loader .modal-sub-content-2").show();
+			           							setTimeout(function(){
+			           								$(".modal-loader .modal-sub-content-2").hide();
+			           								$(".modal-loader").hide();
+			           							},1500);
+		           							}
+           						}
+           				});
+           			});
+		    });
+    });
+});
+
+
+	/*$("#screenModal").on("show.bs.modal", function(e) {
+	    var link = $(e.relatedTarget);
+	    //var link = $("#modleScreenLink").attr('href');
+	    
+	});*/
 });

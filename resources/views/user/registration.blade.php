@@ -19,7 +19,7 @@
             </div>
             @endif
             <div class="inputwrapper animate1 bounceIn">
-            {!! Form::select('usertype',[''=>'Select Any User Type']+$usertype,$log['usertype'],array('id'=>'usertype','required'=>'required')) !!}
+            {!! Form::select('usertype',[''=>'Select Any User Type']+$usertype,'',array('id'=>'usertype','required'=>'required')) !!}
             </div>
             <div class="inputwrapper animate1 bounceIn">
             {!! Form::select('school_id',[''=>'Select Any School']+$schools,'',array('id'=>'school_id','required')) !!}

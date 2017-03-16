@@ -56,7 +56,7 @@ class UserController extends Controller
             $user->mob1     = $request->mob1;
             $user->mob2     = $request->mob2;
             $user->save();
-            return redirect::route('edit_profile')->with('success','Profile updated succesffully!');
+            return redirect::route('profile_edit')->with('success','Profile updated succesffully!');
         }
     }
     public function account_settings(){
