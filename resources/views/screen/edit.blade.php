@@ -1,19 +1,4 @@
-@extends('layout')
 
-@section('pageheader')
-    <div class="pageheader">
-        <div class="pageicon"><span class="iconfa-edit"></span></div>
-        <div class="pagetitle">
-            <h5>Screen</h5>
-            <h1>Edit</h1>
-        </div>
-    </div><!--pageheader-->
-@stop
-
-@section('content')         
-    <div class="widget">
-        <h4 class="widgettitle">Screen Edit</h4>
-        <div class="widgetcontent wc1">
         @if (count($errors) > 0)
             <div class="alert alert-danger">
                 <ul>
@@ -23,21 +8,38 @@
                 </ul>
             </div>
         @endif
-        {!! Form::open(array('route'=>array('screen_update',$details->id),'class'=>'stdform form-validation','files'=>true,'method'=>'post')) !!}
-                    <div class="par control-group">
-                        <label class="control-label" for="firstname">Select Module</label>
-                        <div class="controls">{!! Form::select('module',$module,$details->module,array('class'=>'input-xxlarge','required')) !!}</div>
-                    </div>
+        {!! Form::open(array('route'=>array('screen_update',$screen_alise_name),'class'=>'screenUpdateFrm stdform form-validation','files'=>true,'method'=>'post')) !!}
+        {!! Form::hidden('screen_alise',$screen_alise_name) !!}
+        {!! Form::hidden('screen_name',$screen_name) !!}
+        {!! Form::hidden('group_name',$group_name) !!}
+        <div class="col-md-12">
+        <div class="form-group">
+        <label class="control-label col-md-3">Group Name</label>
+        <div class="col-md-9">{!! $group_name !!}</div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+        <label class="control-label col-md-3">Screen Name</label>
+        <div class="col-md-9">{!! $screen_name !!}</div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+        <label class="control-label col-md-3">Screen Module</label>
+        {!! Form::select('module',[''=>'Select Any Module']+$module,'',array('class'=>'form-control col-md-9')) !!}
+        </div>
+         <div class="clearfix"></div>
+        
+        <div class="form-group">
+        <label class="control-label col-md-3">Screen Status</label>
+        {!! Form::select('status',[''=>'Select Status','1'=>'Active','0'=>'Inactive'],'',array('class'=>'form-control col-md-9')) !!}
+        </div>
+         <div class="clearfix"></div>
+         <div class="form-group">
+        <label class="control-label col-md-3">Is Visible in left panel?</label>
+        {!! Form::checkbox('is_left_visible','1','') !!}
+        </div>
+        <div class="clearfix"></div>
+        </div>
                     
-                    <div class="control-group">
-                        <label class="control-label" for="lastname">Screen Name</label>
-                        <div class="controls">{!! Form::text('screen_name',$details->screen_name,array('class'=>'input-xxlarge','required')) !!}</div>
-                    </div>                   
-                    <p class="stdformbutton">
-                    {!! Form::submit('Submit',array('class'=>'btn btn-primary')) !!}
-                    <a href="{{URL::route('screen_list')}}" class="btn btn-default">Cancel</a>
-                    </p>
         {!! Form::close() !!}
-        </div><!--widgetcontent-->
-    </div><!--widget-->
-@stop
+     
