@@ -20,7 +20,7 @@ Route::any('/active-by-user/{token}',       'WelcomeController@active_by_user')-
 Route::any('/thank-you',                    'WelcomeController@thank_you')->name('thank_you');
 Route::group(['middleware' => ['user']], function () {
 Route::get('/dashboard',                    'UserController@dashboard')->name('dashboard');
-Route::get('/edit-profile',                 'UserController@edit_profile')->name('edit_profile');
+Route::get('/edit-profile',                 'UserController@edit_profile')->name('profile_edit');
 Route::post('/edit_profile_store',          'UserController@edit_profile_store')->name('edit_profile_store');
 Route::get('/account-settings',             'UserController@account_settings')->name('account_settings');
 Route::post('/account-update',              'UserController@account_update')->name('account_update');
@@ -35,7 +35,7 @@ Route::group(['prefix' =>'screen'], function () {
 	Route::get('/list',                  'ScreenController@index')->name('screen_list');
 	Route::get('/add',                   'ScreenController@create')->name('screen_create');
 	Route::post('/store',                'ScreenController@store')->name('screen_store');
-	Route::get('/edit/{id}',             'ScreenController@edit')->name('screen_edit');
+	Route::any('/edit/{id}',             'ScreenController@edit')->name('screen_edit');
 	Route::post('/update/{id}',          'ScreenController@update')->name('screen_update');
 	Route::get('/delete/{id}',           'ScreenController@delete')->name('screen_delete');
 

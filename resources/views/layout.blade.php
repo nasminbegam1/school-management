@@ -12,9 +12,10 @@
 <!--<link rel="stylesheet" href="/css/bootstrap-fileupload.min.css" type="text/css" />-->
 <link rel="stylesheet" href="/css/bootstrap-timepicker.min.css" type="text/css" />
 
-<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="/js/jquery-migrate-1.1.1.min.js"></script>
-<script type="text/javascript" src="/js/jquery-ui-1.10.3.min.js"></script>
+<!-- <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script> -->
+<!-- <script type="text/javascript" src="/js/jquery-migrate-1.1.1.min.js"></script> -->
+<!-- <script type="text/javascript" src="/js/jquery-ui-1.10.3.min.js"></script> -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 
 <script>
@@ -65,13 +66,13 @@
 <!--<script type="text/javascript" src="/js/jquery.tagsinput.min.js"></script>
 <script type="text/javascript" src="/js/jquery.autogrow-textarea.js"></script>
 <script type="text/javascript" src="/js/charCount.js"></script>-->
-<script type="text/javascript" src="/js/colorpicker.js"></script>
-<!--<script type="text/javascript" src="/js/ui.spinner.min.js"></script>-->
-<script type="text/javascript" src="/js/chosen.jquery.min.js"></script>
+<!-- <script type="text/javascript" src="/js/colorpicker.js"></script>
+
+
 <script type="text/javascript" src="/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="/js/modernizr.min.js"></script>
 <script type="text/javascript" src="/js/jquery.slimscroll.js"></script>
-
+ -->
 <!--<script type="text/javascript" src="/js/forms.js"></script>-->
     <script type="text/javascript" src="/js/custom.js"></script>
 </body>

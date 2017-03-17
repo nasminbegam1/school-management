@@ -39,10 +39,10 @@ Breadcrumbs::register('role_assign', function($breadcrumbs,$id)
     $breadcrumbs->push('User List', 'javascript:void(0);');
     $breadcrumbs->push('Role Assign', route('role_assign',$id));
 });
-Breadcrumbs::register('edit_profile', function($breadcrumbs)
+Breadcrumbs::register('profile_edit', function($breadcrumbs)
 {
     $breadcrumbs->parent('home');
-    $breadcrumbs->push('Edit Profile', route('edit_profile'));
+    $breadcrumbs->push('Profile Edit', route('profile_edit'));
 });
 Breadcrumbs::register('account_settings', function($breadcrumbs)
 {
