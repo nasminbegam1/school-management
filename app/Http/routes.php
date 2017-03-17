@@ -11,9 +11,11 @@
 |
 */
 
-Route::any('/',                             'WelcomeController@login')->name('login');
+Route::get('/',                             'WelcomeController@login')->name('login');
+Route::post('/login_post',                  'WelcomeController@login_post')->name('login_post');
 Route::any('/forgot-password',              'WelcomeController@forgot_password')->name('forgot_password');
 Route::any('/registration',                 'WelcomeController@registration')->name('registration');
+Route::post('/registration_post',           'WelcomeController@registration_post')->name('registration_post');
 Route::any('/active-by-user/{token}',       'WelcomeController@active_by_user')->name('active_by_user');
 Route::any('/thank-you',                    'WelcomeController@thank_you')->name('thank_you');
 Route::group(['middleware' => ['user']], function () {
@@ -23,7 +25,7 @@ Route::post('/edit_profile_store',          'UserController@edit_profile_store')
 Route::get('/account-settings',             'UserController@account_settings')->name('account_settings');
 Route::post('/account-update',              'UserController@account_update')->name('account_update');
 Route::any('/logout',                       'UserController@logout')->name('logout');
-Route::post('/change-status',				'WelcomeController@change_status')->name('change-status');
+Route::post('/change-status',		    'WelcomeController@change_status')->name('change-status');
 Route::any('/role-assign/{id}',             'UserController@role_assign')->name('role_assign');
 Route::any('/role-assign-update/{id}',      'UserController@role_assign_update')->name('role_assign_update');
 
@@ -61,4 +63,4 @@ Route::group(['prefix' =>'school-modlues'], function () {
 });
 
 });
-
+include('api_route.php');
