@@ -17,12 +17,15 @@ class ScreenController extends Controller
         foreach ($routeCollection as $value) {
             $methods = $value->getMethods();
             if(in_array('GET', $methods) && !in_array('POST', $methods)){
+                $groupData = Screen::where('screen_alise',$value->getName())->first(); 
                 $group = ltrim($value->getPrefix(),'/');
                 $d[] = ['path'      =>   $value->getPath(),
                         'name'      =>  ucfirst( str_replace('_', ' ', $value->getName())),
                         'group_name'=>   $group,
-                        'alise'     =>  $value->getName()
-                        
+                        'alise'     =>  $value->getName(),
+                        'status'    =>  (($groupData !=null)?$groupData->is_active:'0'),
+                        'module'    =>  (($groupData !=null)?$groupData->module->module_name:'N/A'),
+                        'id'        =>  (($groupData !=null)?$groupData->id:''),
                        ];
             }
         }
@@ -44,52 +47,50 @@ class ScreenController extends Controller
         return view('screen.index',$data);
     }
     
-    public function create(){
-        $data               = array();
-        $data['module']     = Module::pluck('module_name','id')->all();
-        return view('screen.create',$data);
-    }
-    
-    public function store(Request $request){
-        $validator = Validator::make($request->all(),
-                                     ['module'              => 'required',
-                                      'screen_name'         => 'required']);
-        if($validator->fails()){
-            $message = $validator->messages();
-            return Redirect::back()->withErrors($validator)->withInput();
-        }else{
-            $screen                 = new Screen;
-            $screen->modules_id     = $request->module;
-            $screen->screen_name    = $request->screen_name;
-            $screen->is_deleted     = 0;
-            $screen->save();
-            return Redirect::route('screen_list')->with('success','Screen Added Successfully!');
-        }
-    }
-    
+
     public function edit($screen_name){
         //$data['details']    = Screen::find($id);
         $data['module']     = Module::pluck('module_name','id')->all();
 
-        $routeCollection = \Route::getRoutes();;
-        $d =[];
-        foreach ($routeCollection as $value) {
-            $methods = $value->getMethods();
-            if(in_array('GET', $methods) && !in_array('POST', $methods)){
-                $group = ltrim($value->getPrefix(),'/');
-                $d[ $value->getName() ] = ['path'      =>   $value->getPath(),
-                        'name'      =>  ucfirst( str_replace('_', ' ', $value->getName())),
-                        'group_name'=>   $group,
-                        'alise'     =>  $value->getName()
+        $record = Screen::where('screen_alise',$screen_name)->first();
+            if($record == null){
+
+                $routeCollection = \Route::getRoutes();;
+                $d =[];
+                foreach ($routeCollection as $value) {
+                    $methods = $value->getMethods();
+                    if(in_array('GET', $methods) && !in_array('POST', $methods)){
+                        $group = ltrim($value->getPrefix(),'/');
                         
-                       ];
-            }
-        }
+
+                        $d[ $value->getName() ] = ['path'      =>   $value->getPath(),
+                                'name'      =>  ucfirst( str_replace('_', ' ', $value->getName())),
+                                'group_name'=>   $group,
+                                'alise'     =>  $value->getName()
+                                
+                               ];
+                    }
+                }
 
 
-        $data['screen_alise_name'] = $screen_name;
-        $data['screen_name'] =  $d[$screen_name]['name'];
-        $data['group_name']  =  ucfirst( str_replace('-', ' ', $d[$screen_name]['group_name']));
+                $data['screen_alise_name'] = $screen_name;
+                $data['screen_name'] =  $d[$screen_name]['name'];
+                $data['group_name']  =  ucfirst( str_replace('-', ' ', $d[$screen_name]['group_name']));
+                $data['modules_id']   = '';
+                $data['status']   = '';
+                $data['is_left']   = '';
+          }else{
+
+                $data['screen_alise_name'] = $record->screen_alise;
+                $data['screen_name'] =  $record->screen_name;
+                if($record->parent_id != null){
+                    $data['group_name']  =  $record->parent->screen_name;    
+                }
+                $data['modules_id']   = $record->modules_id;
+                $data['status']   = $record->is_active;
+                $data['is_left']   = $record->is_left_visible;
+                
+          }
         return view('screen.edit',$data);
     }
     
@@ -118,21 +119,17 @@ class ScreenController extends Controller
             $screen->screen_name            = $request->screen_name;
             $screen->screen_alise           = $request->screen_alise;
             $screen->is_active              = $request->status;
-            $screen->is_left_visible        = $request->is_left_visible;
+            if($request->is_left_visible){
+                $screen->is_left_visible        = $request->is_left_visible;    
+            }else{
+                $screen->is_left_visible        = 0;
+            }
+            
             $screen->updated_by             =\Auth::guard('users')->user()->id;
             $screen->save();
             return json_encode(['status'=>'1']);
         
     }
     
-    public function delete($id){
-        $screen             = Screen::find($id);
-        $screen->is_deleted = 1;
-        $screen->save();
-        return Redirect::route('screen_list')->with('success','Screen Deleted Successfully!');
-    }
-
-    public function editScreen($screen_name){
-
-    }
+   
 }

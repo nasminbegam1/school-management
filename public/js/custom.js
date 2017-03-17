@@ -247,6 +247,9 @@ $(".modleScreenLink[data-toggle='modal']").on('click', function(e) {
            			});
 		    });
     });
+    $($_mdlObj).on('hidden.bs.modal', function () {
+	    window.location.reload();
+	})
 });
 
 
