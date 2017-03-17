@@ -4,7 +4,7 @@
     <div class="loginpanel">
     <div class="loginpanelinner">
         <div class="logo animate0 bounceIn"><img src="/images/logo.png" alt="" /></div>
-        {!! Form::open(array('class'=>'form-validation','novalidate','id'=>'login'))!!}
+        {!! Form::open(array('route'=>'login_post','class'=>'form-validation','novalidate','id'=>'login'))!!}
             @if(Session::has('errorMessage'))
                 <div class="inputwrapper">
                 <div class="alert alert-error">{!! Session::get('errorMessage') !!}</div>
