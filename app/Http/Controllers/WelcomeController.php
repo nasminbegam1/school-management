@@ -206,7 +206,7 @@ class WelcomeController extends Controller
 	                $data['form_name']      = "School Management System" ;
 	                $data['to_email']       = $user->email;
 	                $data['to_name']        = $user->name;
-	                $data['subject']		= 'Thank you for Signup';
+	                $data['subject']		= 'Request for new password';
 	                $data['password']		= $newPassword;
 	             
 	                $mail = \Mail::send('emails.forgot_password', $data, function ($message) use ($data) {
@@ -252,6 +252,7 @@ class WelcomeController extends Controller
 	    			}
 	    			
 	    		break;
+	    		
 	    	}
 
 	    	echo json_encode(['status'=>$status]);die;

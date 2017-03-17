@@ -38,7 +38,8 @@
             <tr>
                 <!-- <th>Module Name</th> -->
                 <th>Screen Name</th>
-                
+                <th>Module Name</th>
+                <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -47,7 +48,8 @@
             @foreach($lists as $list)
             <tr>
                 <td>{!! $list['name'] !!}</td>
-                
+                <td>{!! $list['module'] !!}</td>
+                <td>{!! (($list['status'] == 1)?'Active':'Inactive') !!}</td>
                 <td>
                 <a href="{{ URL::route('screen_edit',$list['alise']) }}" data-remote="false" data-toggle="modal"  data-target="#screenModal" class="btn btn-default modleScreenLink"><i class="fa fa-pencil"></i></a>
 

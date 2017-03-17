@@ -25,18 +25,18 @@
         <div class="clearfix"></div>
         <div class="form-group">
         <label class="control-label col-md-3">Screen Module</label>
-        {!! Form::select('module',[''=>'Select Any Module']+$module,'',array('class'=>'form-control col-md-9')) !!}
+        {!! Form::select('module',[''=>'Select Any Module']+$module,$modules_id,array('class'=>'form-control col-md-9')) !!}
         </div>
          <div class="clearfix"></div>
         
         <div class="form-group">
         <label class="control-label col-md-3">Screen Status</label>
-        {!! Form::select('status',[''=>'Select Status','1'=>'Active','0'=>'Inactive'],'',array('class'=>'form-control col-md-9')) !!}
+        {!! Form::select('status',[''=>'Select Status','1'=>'Active','0'=>'Inactive'],$status,array('class'=>'form-control col-md-9')) !!}
         </div>
          <div class="clearfix"></div>
          <div class="form-group">
         <label class="control-label col-md-3">Is Visible in left panel?</label>
-        {!! Form::checkbox('is_left_visible','1','') !!}
+        {!! Form::checkbox('is_left_visible','1',$is_left) !!}
         </div>
         <div class="clearfix"></div>
         </div>
