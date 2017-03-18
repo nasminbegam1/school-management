@@ -19,6 +19,8 @@ class UserController extends Controller
         //dd(\Auth::guard('users')->user());
         $data = array();
         return view('user.dashboard',$data);
+
+        
     }
     
     public function logout(CookieJar $cookieJar){
@@ -65,21 +67,30 @@ class UserController extends Controller
     }
     
     public function account_update(Request $request){
-        $data               = array();
-        $validator          = Validator::make($request->all(),
-                                    ['password'                     => 'required|confirmed',
-                                     'password_confirmation'        => 'required'
-                                     ]
-                                );
         
-        if($validator->fails()){
-             $messages = $validator->messages();
-             return Redirect::back()->withErrors($validator)->withInput();
-        }else{
-            $user               = User::find(\Auth::guard('users')->user()->id);
+        if($request->type == 'mobile'){
+            $user               = User::find($request->user_id);
             $user->password     = $request->password;
             $user->save();
-            return redirect::route('account_settings')->with('success','Profile updated succesffully!');
+            $data = array('response'=>'success','msg'=>'Account updated succesffully!','data'=>'');
+            return json_encode($data);
+        }else{
+            $data               = array();
+            $validator          = Validator::make($request->all(),
+                                        ['password'                     => 'required|confirmed',
+                                         'password_confirmation'        => 'required'
+                                         ]
+                                    );
+            
+            if($validator->fails()){
+                 $messages = $validator->messages();
+                 return Redirect::back()->withErrors($validator)->withInput();
+            }else{
+                $user               = User::find(\Auth::guard('users')->user()->id);
+                $user->password     = $request->password;
+                $user->save();
+                return redirect::route('account_settings')->with('success','Profile updated succesffully!');
+            }
         }
     }
     public function lists(Request $request){

@@ -11,9 +11,11 @@
 |
 */
 
+
 Route::get('/',                             'WelcomeController@login')->name('login');
 Route::post('/login_post',                  'WelcomeController@login_post')->name('login_post');
 Route::any('/forgot-password',              'WelcomeController@forgot_password')->name('forgot_password');
+Route::any('/forgot-password-post',         'WelcomeController@forgot_password_post')->name('forgot_password_post');
 Route::any('/registration',                 'WelcomeController@registration')->name('registration');
 Route::post('/registration_post',           'WelcomeController@registration_post')->name('registration_post');
 Route::any('/active-by-user/{token}',       'WelcomeController@active_by_user')->name('active_by_user');
@@ -28,7 +30,6 @@ Route::any('/logout',                       'UserController@logout')->name('logo
 Route::post('/change-status',		    'WelcomeController@change_status')->name('change-status');
 Route::any('/role-assign/{id}',             'UserController@role_assign')->name('role_assign');
 Route::any('/role-assign-update/{id}',      'UserController@role_assign_update')->name('role_assign_update');
-
 
 
 Route::group(['prefix' =>'screen'], function () {

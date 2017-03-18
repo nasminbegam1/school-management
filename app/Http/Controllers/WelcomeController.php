@@ -106,7 +106,7 @@ class WelcomeController extends Controller
 	                    $cookieJar->queue(Cookie::forget('remember_password'));
 	                    $cookieJar->queue(Cookie::forget('remember_usertype'));
 	                }
-	                $checkUserstatus = User::where(function($query)
+	                $checkUserstatus = User::where(function($query) use ($user_id_email)
 								{
 								    $query->where("email",$user_id_email)
 									  ->orWhere("user_id",$user_id_email);
@@ -173,11 +173,11 @@ class WelcomeController extends Controller
 				$data['link']           = \URL::route('active_by_user',$user->remember_token);
 				$data['subject']	= 'Thank you for Signup';
 	
-				/*$mail = \Mail::send('emails.signup_mailto_user', $data, function ($message) use ($data) {
+				$mail = \Mail::send('emails.signup_mailto_user', $data, function ($message) use ($data) {
 				   $message->from($data['from_email'], $data['form_name']);
 				   $message->subject($data['subject']);
 				   $message->to($data['to_email'] );
-				});*/
+				});
 				$data1 = array('response'=>'success','msg'=>'Please check your mail to active account','data'=>'');
 				return json_encode($data1);
 		}else{
@@ -257,37 +257,69 @@ class WelcomeController extends Controller
 	    }
 
 	    public function forgot_password(Request $request){
-	    	$data =[];	
-	    	if($request->isMethod('post')){
-	    		$email = $request->email;
-	    		$user = User::where('email',$email)->first();
-	    		if($user !=null){
-	    			$newPassword = str_random(6);
-	    			$newPassword = '123456';
-	    			$user->password = $newPassword;
-	    			$user->save();
-
-	    			$data['from_email']     =  $this->form_email;
-	                $data['form_name']      = "School Management System" ;
-	                $data['to_email']       = $user->email;
-	                $data['to_name']        = $user->name;
-	                $data['subject']		= 'Request for new password';
-	                $data['password']		= $newPassword;
-	             
-	                $mail = \Mail::send('emails.forgot_password', $data, function ($message) use ($data) {
-	                   $message->from($data['from_email'], $data['form_name']);
-	                   $message->subject($data['subject']);
-	                   $message->to($data['to_email'] );
-	                });
-
-	                return Redirect::route('login')->with('successMessage', 'New password is send to your registerd Email <br/> Please Check the mail inbox to get the new password');
-	    		}else{
-	    			return Redirect::back()->with('errorMessage', 'Email is not recognized by our system');
-	    		}
-	    	}
+	    	$data =[];
 	    	return view('user.forgot_password', $data);
 	    }
-
+		public function forgot_password_post(Request $request){
+			if($request->isMethod('post')){
+				if($request->type == 'mobile'){
+					
+						$email 	= $request->email;
+						$user 	= User::where('email',$email)->first();
+						if($user !=null){
+							$newPassword = str_random(6);
+							$newPassword = '123456';
+							$user->password = $newPassword;
+							$user->save();
+			
+							$data['from_email']     =  $this->form_email;
+						        $data['form_name']      = "School Management System" ;
+						        $data['to_email']       = $user->email;
+						        $data['to_name']        = $user->name;
+						        $data['subject']	= 'Request for new password';
+						        $data['password']	= $newPassword;
+					     
+						$mail = \Mail::send('emails.forgot_password', $data, function ($message) use ($data) {
+						   $message->from($data['from_email'], $data['form_name']);
+						   $message->subject($data['subject']);
+						   $message->to($data['to_email'] );
+						});
+						$data = array('response'=>'success','msg'=>'New password is send to your registerd Email <br/> Please Check the mail inbox to get the new password','data'=>'');
+				
+						}else{
+						$data = array('response'=>'error','msg'=>'Email is not recognized by our system','data'=>'');
+						}
+						return json_encode($data);
+				}else{
+						$email = $request->email;
+						$user = User::where('email',$email)->first();
+						if($user !=null){
+							$newPassword = str_random(6);
+							$newPassword = '123456';
+							$user->password = $newPassword;
+							$user->save();
+			
+							$data['from_email']     =  $this->form_email;
+						$data['form_name']      = "School Management System" ;
+						$data['to_email']       = $user->email;
+						$data['to_name']        = $user->name;
+						$data['subject']	= 'Request for new password';
+						$data['password']		= $newPassword;
+					     
+						$mail = \Mail::send('emails.forgot_password', $data, function ($message) use ($data) {
+						   $message->from($data['from_email'], $data['form_name']);
+						   $message->subject($data['subject']);
+						   
+						   $message->to($data['to_email'] );
+						});
+			
+						return Redirect::route('login')->with('successMessage', 'New password is send to your registerd Email <br/> Please Check the mail inbox to get the new password');
+						}else{
+							return Redirect::back()->with('errorMessage', 'Email is not recognized by our system');
+						}
+				}
+			}	
+		}
 	    public function change_status(Request $request){
 	    	$status 	= $request->status;
 	    	$id 		= $request->id;
